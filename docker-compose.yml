@@ -10,13 +10,15 @@ services:
     ports:
       - "8082:80"
     environment:
+      - HOST=adminmongo
       - PORT=80
       - CONN_NAME=mongo
       - DB_HOST=mongo
+      - CONTEXT =/adminmongo
     networks:
       - traefik
     labels:
       - "traefik.backend=adminmongo"
       - "traefik.docker.network=plataforma_network"
-      - "traefik.adminmongo.frontend.rule=PathPrefixStrip: /adminmongo"
+      - "traefik.adminmongo.frontend.rule=PathPrefix:/adminmongo"
       - "traefik.port=80"
