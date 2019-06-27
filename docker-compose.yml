@@ -1,0 +1,22 @@
+version: '3'
+networks:
+  traefik:
+    external:
+      name: plataforma_network
+services:
+  adminmongo:
+    image: mrvautin/adminmongo
+    container_name: adminmongo
+    ports:
+      - "8082:80"
+    environment:
+      - PORT=80
+      - CONN_NAME=mongo
+      - DB_HOST=mongo
+    networks:
+      - traefik
+    labels:
+      - "traefik.backend=adminmongo"
+      - "traefik.docker.network=plataforma_network"
+      - "traefik.adminmongo.frontend.rule=PathPrefixStrip: /adminmongo"
+      - "traefik.port=80"
